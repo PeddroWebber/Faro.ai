@@ -4,6 +4,8 @@
 
 Projeto desenvolvido no **OpenAI DevDay Exchange Community Hackathon: São Paulo** (23/10/2026).
 
+Desenvolvido com apoio do **Codex, da OpenAI**, como assistente de programação.
+
 🔗 **Demo:** https://sales-quest-dashboard.vercel.app/preview/fio/Institucional
 
 ---
