@@ -1,0 +1,1 @@
+export function Priority({level='high'}:{level?:'high'|'medium'|'low'}){return <span className={'badge '+(level==='high'?'':level)}>{level==='high'?'● Alta prioridade · 80–100':level==='medium'?'◐ Boa oportunidade · 55–79':'○ No seu tempo · até 54'}</span>}

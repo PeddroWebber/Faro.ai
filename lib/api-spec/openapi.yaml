@@ -1,0 +1,87 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: API specification
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+paths:
+  /faro/chat:
+    post:
+      operationId: faroChat
+      summary: Assistente OpenAI para validação com dados fictícios
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [message]
+              properties:
+                message: { type: string, maxLength: 6000 }
+                context: { type: string, maxLength: 24000 }
+                history:
+                  type: array
+                  maxItems: 16
+                  items:
+                    type: object
+                    required: [role, content]
+                    properties:
+                      role: { type: string, enum: [user, assistant] }
+                      content: { type: string, maxLength: 6000 }
+                image: { type: string, description: PNG/JPEG/WebP data URL }
+                audio:
+                  type: object
+                  required: [data, format]
+                  properties:
+                    data: { type: string }
+                    format: { type: string, enum: [wav, mp3] }
+                voice: { type: boolean }
+      responses:
+        "200":
+          description: Resposta real do provedor, sem executar ações comerciais
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [reply, mode]
+                properties:
+                  reply: { type: string }
+                  mode: { type: string, enum: [live] }
+                  audio:
+                    type: object
+                    required: [data, format]
+                    properties:
+                      data: { type: string }
+                      format: { type: string, enum: [wav] }
+        "400": { description: Entrada inválida }
+        "429": { description: Limite demonstrativo atingido }
+        "503": { description: Provedor indisponível ou sem configuração }
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+

@@ -1,0 +1,6 @@
+{
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm --filter @workspace/mockup-sandbox run build",
+  "outputDirectory": "artifacts/mockup-sandbox/dist",
+  "rewrites": [{ "source": "/preview/:path*", "destination": "/index.html" }]
+}
